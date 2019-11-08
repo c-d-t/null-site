@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,900&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+}
+a {
+    text-decoration: none;
+}
+button {
+    border: none;
+    background: none;
+}
+*:focus {
+    outline: none;
+}
+li {
+    list-style-type: none;
+}
+input {
+    border: none;
+}
+
+/* GLOBAL */
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 768px) {
+    .container {
+        width: 100%;
+    }
+}

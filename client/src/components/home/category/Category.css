@@ -1,0 +1,34 @@
+.category {
+    box-sizing: border-box;
+    color: #fff;
+    background-image: linear-gradient(-135deg, rgb(8, 218, 120), rgb(33, 192, 60));
+    box-shadow: #ccc 0 5px 10px;
+    border-radius: 10px;
+    width: 30%;
+    min-width: 350px;
+    padding: 50px 20px;
+    margin: 10px 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all .1s linear;
+}
+.category-disabled {
+    color: #555;
+    background-image: linear-gradient(0deg, #222, #333);
+}
+.category:hover {
+    box-shadow: #999 0 3px 15px;
+}
+.category-icon {
+    width: 40px;
+    height: 40px;
+    margin: 30px auto;
+}
+.category-name {
+    text-align: center;
+}
+.category-desc {
+    text-align: center;
+    color: rgb(64, 109, 19);
+}

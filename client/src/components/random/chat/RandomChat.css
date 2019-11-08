@@ -1,0 +1,68 @@
+#random-chat-container {
+    margin-top: 5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: #ddd 5px 5px 5px;
+}
+#random-messages {
+    box-sizing: border-box;
+    background-color: #eee;
+    height: 80vh;
+    overflow: scroll;
+    padding: 20px;
+  }
+#random-messages > li {
+    margin: 10px 0;
+    border-bottom: 2px solid #ddd;
+    word-wrap: break-word;
+}
+#random-messages > li > span {
+    color: rgb(53, 150, 29);
+    font-weight: bold;
+    margin-right: 5px;
+}
+#random-input {
+    background-color: #dfffcc;
+    border-top: 4px solid rgb(9, 194, 108);
+    height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 10px;
+}
+#random-text {
+    font-size: 15px;
+    line-height: 40px;
+    box-sizing: border-box;
+    width: 85%;
+    height: 100%;
+    background: none;
+    padding: 8px;
+}
+#random-submit {
+    box-sizing: border-box;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #fff;
+    width: 15%;
+    height: 100%;
+    background-color: rgb(8, 218, 120);
+}
+
+@media only screen and (max-width: 768px) {
+    #random-messages {
+        height: 93vh;
+        padding-top: 10vh;
+    }
+    #random-input {
+        height: 7vh;
+    }
+    #random-chat-container {
+        margin: 0px;
+        border-radius: 0;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        z-index: -1;
+        box-shadow: none;
+    }
+}
