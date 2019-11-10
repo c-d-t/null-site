@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+
 import './RandomChatEntrance.css'
 
 class RandomFront extends Component {
@@ -6,19 +8,19 @@ class RandomFront extends Component {
         super(props)
         this.state = {
             nickname: '',
+            redirect: false
         }
     }
 
     componentDidMount() {
         document.getElementById('i').focus()
-        
     }
 
     updateText = e => {
         let key = e.target.name
         let value = e.target.value
         
-        // weak clean
+        // soft clean
         value = value.replace(/[^0-9a-z]/gi, '')
         value = value.slice(0,15)
 
@@ -27,20 +29,29 @@ class RandomFront extends Component {
         })
     }
 
-    submitBtn = () => {
+    submitBtn = (e) => {
+        e.preventDefault()
         if (this.state.nickname === '') {
             document.getElementById('i').placeholder = 'A nickname is required'
             return
         }
 
-        document.cookie = `nickname=${this.state.nickname}; path="/random"`
+        this.addName(this.state.nickname)
 
-        // TODO: clean name
+        this.setState({
+            redirect: true
+        })
+    }
 
-        window.location.pathname = '/random/chat'
+    addName = (nickname) => {
+        sessionStorage.setItem("nickname", nickname)
     }
 
     render() {
+        if (this.state.redirect === true) {
+            return <Redirect to="/random/chat" />
+        }
+
         return (
             <div className="container">
                 <div id="random-form">

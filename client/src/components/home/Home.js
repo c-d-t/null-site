@@ -7,7 +7,7 @@ import './Home.css'
 class Home extends React.Component {
     render() {
         return (
-            <div id="category-container" class="container">
+            <div id="category-container" className="container">
                 <Category
                     name="Account"
                     description="Login / Sign up"

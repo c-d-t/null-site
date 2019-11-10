@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { FaUser } from 'react-icons/fa'
+import { FaGithub } from 'react-icons/fa'
 
 import './Header.css'
 
@@ -10,7 +10,7 @@ function Header() {
         <header>
             <Link to="/" id="header-logo">null<span>SITE</span></Link>
             <ul id="header-items">
-                <li><FaUser /> Account</li>
+                <a href="https://github.com/CoherentNonsense/null-site"><li><FaGithub /> Github</li></a>
             </ul>
         </header>
     )

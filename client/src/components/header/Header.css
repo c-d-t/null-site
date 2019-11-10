@@ -1,4 +1,5 @@
 header {
+    z-index: 10;
     position: fixed;
     top: 0;
     background-color: #161616;
@@ -25,13 +26,13 @@ header {
     color: rgb(8, 218, 120)
 }
 #header-items {
-    float: left;
+    float: right;
     display: flex;
     line-height: 40px;
     height: 40px;
     justify-content: center;
 }
-#header-items > li {
+#header-items li {
     color: #fff;
     font-weight: bolder;
     list-style: none;

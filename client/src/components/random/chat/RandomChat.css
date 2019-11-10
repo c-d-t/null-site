@@ -11,15 +11,17 @@
     overflow: scroll;
     padding: 20px;
   }
-#random-messages > li {
-    margin: 10px 0;
-    border-bottom: 2px solid #ddd;
+.message-content {
+    margin: 1px 0;
     word-wrap: break-word;
 }
-#random-messages > li > span {
+.message-author {
     color: rgb(53, 150, 29);
     font-weight: bold;
     margin-right: 5px;
+}
+.message-timestamp {
+    color: grey;
 }
 #random-input {
     background-color: #dfffcc;
@@ -62,7 +64,6 @@
         width: 100%;
         position: absolute;
         bottom: 0;
-        z-index: -1;
         box-shadow: none;
     }
 }

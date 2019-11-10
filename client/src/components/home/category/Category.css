@@ -20,6 +20,9 @@
 .category:hover {
     box-shadow: #999 0 3px 15px;
 }
+.category-disabled:hover {
+    cursor: default;
+}
 .category-icon {
     width: 40px;
     height: 40px;

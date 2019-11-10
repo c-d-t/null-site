@@ -5,7 +5,7 @@ let initRandomChatSockets = require('./random/randomChat')
 function initSockets(server) {
     let io =  socketIO(server)
 
-    initRandomChatSockets(io.of('./random/randomChat.js'))
+    initRandomChatSockets(io.of('/random'))
 }
 
 module.exports = initSockets
