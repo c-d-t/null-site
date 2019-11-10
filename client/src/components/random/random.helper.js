@@ -12,4 +12,4 @@ function cleanString(i) {
     return cleaned
 }
 
-export { cleanString }
+export { cleanString, getNickname }

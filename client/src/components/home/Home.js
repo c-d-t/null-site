@@ -10,10 +10,9 @@ class Home extends React.Component {
             <div id="category-container" className="container">
                 <Category
                     name="Account"
-                    description="Login / Sign up"
+                    description="Settings"
                     icon={<FaUser className="category-icon"/>}
-                    url=""
-                    disabled={true}
+                    url="/account"
                 />
                 <Category
                     name="Random Chat"
@@ -25,8 +24,7 @@ class Home extends React.Component {
                     name="Group Chat"
                     description="Join the discussion"
                     icon={<FaUserFriends className="category-icon"/>}
-                    url=""
-                    disabled={true}
+                    url="group"
                 />
                 <Category
                     name="Forums"

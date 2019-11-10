@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 import './RandomChatEntrance.css'
 
@@ -65,6 +65,13 @@ class RandomFront extends Component {
                         autoComplete="off"
                         value={this.state.nickname}
                         onChange={this.updateText} />
+                    <Link to="/">
+                        <button
+                            className="button-submit"
+                            type="button">
+                            Back
+                        </button>
+                    </Link>
                     <button
                         className="button-submit"
                         type="button"

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Timeago from 'react-timeago'
 import io from 'socket.io-client'
 
 import './RandomChat.css'
@@ -9,21 +10,33 @@ class RandomChat extends Component {
     state = {
         roomID: '',
         text: '',
+        alone: false,
         messages:  []
     }
 
     componentDidMount() {
-        document.getElementById("random-text").focus()
         this.initSockets()
     }
 
     componentWillUnmount() {
+        this.socket.disconnect()
+    }
 
+    // get in queue for a match
+    startMatch = () => {
+        document.getElementById("random-text").focus()
+        this.socket.emit('joinRoom')
+        this.setState({
+            messages: [{
+                authorType: 'moderator',
+                content: 'Looking for partner...'
+            }],
+            alone: false
+        })
     }
 
     initSockets = () => {
-        // get in queue //
-        this.socket.emit('joinRoom')
+        this.startMatch()
 
         // get room id and introduce name to other player //
         this.socket.on('start', data => {
@@ -33,16 +46,54 @@ class RandomChat extends Component {
             this.socket.emit('introduction', { nickname: this.getNickname()})
         })
 
+        this.socket.on('finish', () => {
+            this.setState({
+                alone: true
+            })
+        })
+
         // get message and add to state
-        this.socket.on('message', data => {
-            let newMessage = {
-                author: data.author,
-                content: data.content,
-                timeStamp: data.timeStamp,
+        this.socket.on('receiveMessage', data => {
+            let div = document.getElementById('random-messages')
+            let isAtBottom = (div.scrollTop + div.clientHeight === div.scrollHeight )
+            let newMessage  = null
+            if (data.authorType === 'moderator') {
+                newMessage = {
+                    authorType: 'moderator',
+                    content: [data.content]
+                }
+            } else {
+                let authorType = (data.author === this.getNickname()) ? 'this-user' : 'other-user'
+                newMessage = {
+                    author: data.author,
+                    authorType: authorType,
+                    content: [data.content],
+                    timestamp: data.timestamp,
+                }
             }
-            this.setState(prevState => ({
-                messages: [...prevState, newMessage]
-            }))
+
+            // if last message is from the same person and in the same hour, combine it
+            let lastMessage = this.state.messages[this.state.messages.length - 1]
+            let lastMessageIndex = this.state.messages.findIndex(message => message === lastMessage)
+            if (newMessage.authorType === lastMessage.authorType && Date.now() - lastMessage.timestamp <= 3600000) {
+                let messages = [...this.state.messages]
+                let message = {
+                    ...messages[lastMessageIndex],
+                    content: [...lastMessage.content, data.content]
+                }
+                messages[lastMessageIndex] = message
+
+                this.setState({
+                    messages
+                })
+            } else {
+                this.setState(prevState => ({
+                    messages: [...prevState.messages, newMessage]
+                }))
+            }
+            if (isAtBottom) {
+                div.scrollTop = div.scrollHeight
+            }
         })
     }
 
@@ -51,7 +102,11 @@ class RandomChat extends Component {
         return sessionStorage.getItem("nickname")
     }
 
+    // send socket with data (author name, content, and timestamp)
     submitBtn = () => {
+        document.getElementById("random-text").focus()
+        let timestamp = Date.now()
+        this.socket.emit('sendMessage', { roomID: this.state.roomID, author: this.getNickname(), content: this.state.text, timestamp })
         this.setState({text: ''})
     }
 
@@ -63,17 +118,54 @@ class RandomChat extends Component {
         })
     }
 
+    onTextKeyDown = e => {
+        if (e.key === 'Enter') {
+            this.submitBtn()
+        }
+    }
+
+    timeFormatter = (value, unit, suffix) => {
+        if (unit === 'second') {
+            return 'now'
+        }
+        return `${value} ${unit}s ${suffix}`
+    }
+
     render() {
         return  (
             <div className="container">
                 <div id="random-chat-container">
                     <ul id="random-messages">
-                        <li><div className="message-author">bobbette</div><div className="message-content">Hi there bud bud buddy</div><div className="message-timestamp">a few minutes ago</div></li>
-
-                        {this.state.messages.map((data, i) => {
-                            return (
-                                <li key={i}><span>{data.author}:</span>{data.content}</li>
-                            )
+                        {this.state.messages.map((message, i) => {
+                            if (message.authorType === 'moderator') {
+                                return (
+                                    <li className="moderator" key={i}>
+                                        <div className="message">
+                                            <div className="message-content">
+                                                {message.content}
+                                            </div>
+                                        </div>
+                                    </li>
+                                )
+                            } else {
+                                return (
+                                    <li className={message.authorType} key={i}>
+                                        <div className="message">
+                                            <div className="message-content">
+                                                <div className="message-author">
+                                                    {message.author}
+                                                </div>
+                                                    {message.content.map((content, i) => (
+                                                        <div key={i}>{content}</div>
+                                                    ))}
+                                                </div>
+                                            <div className="message-timestamp">
+                                                <Timeago date={message.timestamp} formatter={this.timeFormatter} minPeriod={60} />
+                                            </div>
+                                        </div>
+                                    </li>
+                                )
+                            }
                         })}
                     </ul>
                     <div id="random-input">
@@ -84,11 +176,14 @@ class RandomChat extends Component {
                             autoComplete="off"
                             placeholder="Type something..."
                             value={this.state.text}
-                            onChange={this.updateText} />
+                            onChange={this.updateText}
+                            onKeyDown={this.onTextKeyDown} />
                         <button
                             id="random-submit"
                             type="button"
-                            onClick={this.submitBtn}>Send</button>
+                            onClick={this.state.alone ? this.startMatch : this.submitBtn}>
+                                {this.state.alone ? 'New' : 'Send'}
+                                </button>
                     </div>
                 </div>
             </div>

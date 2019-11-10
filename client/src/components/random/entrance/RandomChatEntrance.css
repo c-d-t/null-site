@@ -11,6 +11,9 @@
     top: 65%;
     left: 50%;
     transform: translate(-50%, -100%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .button-submit {
