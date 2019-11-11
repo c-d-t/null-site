@@ -11,7 +11,7 @@
     overflow: scroll;
     padding: 20px;
 }
-.message-content {
+.message-bubble {
     color: #333;
     display: inline-block;
     background-color: rgb(117, 247, 160);
@@ -23,7 +23,7 @@
     box-shadow: #ddd 5px 5px 5px;
     transition: box-shadow 100ms linear;
 }
-.message-content:hover {
+.message-bubble:hover {
     box-shadow: none;
 }
 .message-author {
@@ -43,18 +43,21 @@
 .this-user {
     text-align: end;
 }
-.this-user .message-content {
+.this-user .message-bubble {
     background-color: rgb(184, 180, 180);
     border-radius: 1rem 1rem 0 1rem;
 }
 .moderator {
     text-align: center;
 }
-.moderator .message-content {
+.moderator .message-bubble {
     color: rgb(80, 85, 78);
     font-weight: bold;
     background: none;
     box-shadow: none;
+}
+.message-content {
+    margin: 0.4rem 0.1rem;
 }
 #random-input {
     background-color: #dfffcc;
@@ -99,7 +102,7 @@
         bottom: 0;
         box-shadow: none;
     }
-    .message-content {
+    .message-bubble {
         box-shadow: none;
     }
 }

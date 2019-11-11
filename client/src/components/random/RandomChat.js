@@ -75,7 +75,7 @@ class RandomChat extends Component {
             // if last message is from the same person and in the same hour, combine it
             let lastMessage = this.state.messages[this.state.messages.length - 1]
             let lastMessageIndex = this.state.messages.findIndex(message => message === lastMessage)
-            if (newMessage.authorType === lastMessage.authorType && Date.now() - lastMessage.timestamp <= 3600000) {
+            if (newMessage.authorType === lastMessage.authorType && Date.now() - lastMessage.timestamp <= 60000) {
                 let messages = [...this.state.messages]
                 let message = {
                     ...messages[lastMessageIndex],
@@ -99,6 +99,9 @@ class RandomChat extends Component {
 
     getNickname = () => {
         // TODO: clean name
+        if (sessionStorage.getItem("nickname") === null) {
+            sessionStorage.setItem("nickname", "Stranger")
+        }
         return sessionStorage.getItem("nickname")
     }
 
@@ -128,7 +131,11 @@ class RandomChat extends Component {
         if (unit === 'second') {
             return 'now'
         }
-        return `${value} ${unit}s ${suffix}`
+        if (value === 1) {
+            return `${value} ${unit} ${suffix}`
+        } else {
+            return `${value} ${unit}s ${suffix}`
+        }
     }
 
     render() {
@@ -151,14 +158,14 @@ class RandomChat extends Component {
                                 return (
                                     <li className={message.authorType} key={i}>
                                         <div className="message">
-                                            <div className="message-content">
+                                            <div className="message-bubble">
                                                 <div className="message-author">
                                                     {message.author}
                                                 </div>
-                                                    {message.content.map((content, i) => (
-                                                        <div key={i}>{content}</div>
-                                                    ))}
-                                                </div>
+                                                {message.content.map((content, i) => (
+                                                    <div className="message-content" key={i}>{content}</div>
+                                                ))}
+                                            </div>
                                             <div className="message-timestamp">
                                                 <Timeago date={message.timestamp} formatter={this.timeFormatter} minPeriod={60} />
                                             </div>

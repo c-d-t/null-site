@@ -2,8 +2,7 @@ let uuid = require('uuid/v1')
 
 let rooms =  []
 
-let randomChatSocket = {}
-randomChatSocket.initRandomChatSockets = (io) => {
+function initRandomChatSockets(io) {
     io.on('connection', socket => {
         console.log('** random chat client connected to socket **')
 
@@ -55,4 +54,4 @@ randomChatSocket.initRandomChatSockets = (io) => {
     })
 }
 
-module.exports = randomChatSocket.initRandomChatSockets
+module.exports = initRandomChatSockets

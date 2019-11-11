@@ -4,15 +4,41 @@ import { FaUser, FaDiceFive, FaUserFriends, FaBook } from 'react-icons/fa'
 import Category from './category/Category'
 import './Home.css'
 
+import Welcome from '../welcome/Welcome'
+
 class Home extends React.Component {
+    state = {
+        loggedIn: false
+    }
+
+    componentDidMount() {
+        if (sessionStorage.getItem("nickname") !== null) {
+            this.setState({
+                loggedIn: true
+            })
+        }
+    }
+
+    tempLogin = () => {
+        this.setState({
+            loggedIn: true
+        })
+    }
+
     render() {
+        if (!this.state.loggedIn) {
+            return (
+                <Welcome tempLogin={this.tempLogin} />
+            )
+        }
         return (
             <div id="category-container" className="container">
                 <Category
                     name="Account"
                     description="Settings"
                     icon={<FaUser className="category-icon"/>}
-                    url="/account"
+                    url=""
+                    disabled={true}
                 />
                 <Category
                     name="Random Chat"

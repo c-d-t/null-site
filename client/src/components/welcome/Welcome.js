@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
-import { Redirect, Link } from 'react-router-dom'
 
-import './RandomChatEntrance.css'
+import './Welcome.css'
 
-class RandomFront extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            nickname: '',
-            redirect: false
-        }
+class Welcome extends Component {
+    state = {
+        nickname: '',
     }
 
     componentDidMount() {
@@ -22,40 +17,34 @@ class RandomFront extends Component {
         
         // soft clean
         value = value.replace(/[^0-9a-z]/gi, '')
-        value = value.slice(0,15)
+        value = value.slice(0,20)
 
         this.setState({
             [key]: value
         })
     }
 
-    submitBtn = (e) => {
-        e.preventDefault()
+    submitBtn = () => {
         if (this.state.nickname === '') {
             document.getElementById('i').placeholder = 'A nickname is required'
             return
         }
 
-        this.addName(this.state.nickname)
-
-        this.setState({
-            redirect: true
-        })
+        sessionStorage.setItem("nickname", this.state.nickname)
+        this.props.tempLogin()
     }
 
-    addName = (nickname) => {
-        sessionStorage.setItem("nickname", nickname)
+    textKeyDown = e => {
+        if (e.key === 'Enter') {
+            this.submitBtn()
+        }
     }
 
     render() {
-        if (this.state.redirect === true) {
-            return <Redirect to="/random/chat" />
-        }
-
         return (
             <div className="container">
                 <div id="random-form">
-                    <h2 className="form-field">Random Chat</h2>
+                    <h2 className="form-field">Your Nickname (At the moment, if you want to change this, you need to open a new tab)</h2>
                     <input
                         id="i"
                         className="text-field"
@@ -64,19 +53,13 @@ class RandomFront extends Component {
                         placeholder="Nickname"
                         autoComplete="off"
                         value={this.state.nickname}
-                        onChange={this.updateText} />
-                    <Link to="/">
-                        <button
-                            className="button-submit"
-                            type="button">
-                            Back
-                        </button>
-                    </Link>
+                        onChange={this.updateText}
+                        onKeyDown={this.textKeyDown} />
                     <button
                         className="button-submit"
                         type="button"
                         onClick={this.submitBtn}>
-                        Join
+                        Begin!
                     </button>
                 </div>
             </div>
@@ -84,4 +67,4 @@ class RandomFront extends Component {
     }
 }
 
-export default RandomFront
+export default Welcome

@@ -10,8 +10,8 @@ import './App.css';
 // components
 import Header from './components/header/Header'
 import Home from './components/home/Home'
-import RandomChatEntrance from './components/random/entrance/RandomChatEntrance'
-import RandomChat from './components/random/chat/RandomChat'
+import RandomChat from './components/random/RandomChat'
+import GroupChat from './components/group/GroupChat'
 
 function App() {
   return (
@@ -22,11 +22,11 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route exact path="/random">
-            <RandomChatEntrance />
-          </Route>
-          <Route exact path="/random/chat">
+          <Route path="/random">
             <RandomChat />
+          </Route>
+          <Route path="/group">
+            <GroupChat />
           </Route>
         </Switch>
       </div>

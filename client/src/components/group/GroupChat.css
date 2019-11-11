@@ -1,0 +1,54 @@
+#group-container {
+    background-color: grey;
+}
+#group-main {
+    width: 40rem;
+    margin: 0 auto;
+}
+#group-messages {
+    color: #fff;
+    background-color: rgb(14, 14, 14);
+    height: 93vh;
+    box-sizing: border-box;
+    padding: 3rem 1rem 1rem 1rem;
+    overflow: scroll;
+}
+.group-message {
+    margin: 0.5rem 0;
+}
+.group-message-bubble {
+    max-width: 100%;
+    display: inline-block;
+    padding: 1rem;
+    background-color: rgb(34, 34, 34);
+    border-radius: 1rem 1rem 1rem 0;
+    word-wrap: break-word;
+}
+.group-message-author {
+    color: rgb(129, 255, 177);
+    font-weight: bold;
+}
+.group-message-timestamp {
+    color: rgb(163, 163, 163);
+    margin-left: 0.25rem;
+    font-size: 0.75rem;
+}
+#group-input {
+    height: 7vh;
+}
+#group-text {
+    color: #fff;
+    font-size: 1rem;
+    background-color: #333;
+    width: 85%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0 1rem;
+}
+#group-submit {
+    font-size: 1rem;
+    font-weight: bold;
+    width: 15%;
+    height: 100%;
+    background-color: #6fff9f;
+}
